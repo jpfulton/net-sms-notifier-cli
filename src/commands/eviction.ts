@@ -12,5 +12,7 @@ function createMessage(serverName: string): string {
   const time = now.toLocaleTimeString();
   const message = `The ${serverName} server has been evicted at ${time}.`;
 
+  console.log(serverName);
+
   return wrapMessage(message);
 }
