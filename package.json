@@ -8,8 +8,12 @@
   "license": "MIT",
   "private": false,
   "packageManager": "yarn@1.22.19",
+  "type": "module",
   "engines": {
     "node": ">=18.16.0"
+  },
+  "bin": {
+    "sms-notify-cli": "dist/index.js"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
