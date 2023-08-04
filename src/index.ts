@@ -10,6 +10,8 @@ program.description(
   "A CLI for sending SMS notifications to system administrators."
 );
 
+program.exitOverride();
+
 program
   .command("eviction")
   .argument("<serverName>", "Server name being evicted.")
@@ -27,4 +29,9 @@ program
   .description("Validate the configuration file.")
   .action(validate);
 
-await program.parseAsync();
+try {
+  program.parse();
+} catch (error) {
+  console.error((error as Error).message);
+  process.exit(1);
+}
