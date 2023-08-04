@@ -7,6 +7,16 @@ import { eviction } from "./commands/eviction.js";
 import { init } from "./commands/init.js";
 import { validate } from "./commands/validate.js";
 
+if (process && process.getuid && process.getuid() !== 0) {
+  console.error(
+    chalk.red.bold("This utility needs to run as root or in a sudo context.")
+  );
+  console.error(
+    chalk.red.bold(`Currently running as UID: ${process.getuid()}.`)
+  );
+  process.exit(1);
+}
+
 program.description(
   "A CLI for sending SMS notifications to system administrators."
 );
