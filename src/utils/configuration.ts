@@ -12,6 +12,7 @@ export const CONFIGURATION_FILE_TEMPLATE = `{
   "accountSid": "ACCOUNT_SID",
   "authToken": "AUTH_TOKEN",
   "messageServiceSid": "MESSAGE_SERVICE_SID",
+  "brandIdentifier": "YOUR BRAND IDENTIFIER HERE",
   "toNumbers": [
 
   ]
@@ -21,6 +22,7 @@ export interface Configuration {
   accountSid: string;
   authToken: string;
   messageServiceSid: string;
+  brandIdentifier: string;
   toNumbers: string[];
 }
 

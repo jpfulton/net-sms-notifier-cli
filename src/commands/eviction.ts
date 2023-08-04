@@ -1,13 +1,17 @@
 import chalk from "chalk";
 
-import { readConfigurationFromDefaultPath } from "../utils/configuration.js";
+import {
+  Configuration,
+  readConfigurationFromDefaultPath,
+} from "../utils/configuration.js";
 import { wrapMessage } from "../utils/format.js";
 import { getTwilioClient } from "../utils/twilio.js";
 
 export async function eviction(serverName: string): Promise<void> {
-  const message = createMessage(serverName);
   const config = readConfigurationFromDefaultPath();
   const client = getTwilioClient();
+
+  const message = createMessage(config, serverName);
 
   console.log(chalk.blue.bold("Notifying administrators of eviction."));
 
@@ -20,10 +24,10 @@ export async function eviction(serverName: string): Promise<void> {
   });
 }
 
-function createMessage(serverName: string): string {
+function createMessage(config: Configuration, serverName: string): string {
   const now = new Date();
   const time = now.toLocaleTimeString();
   const message = `The ${serverName} server has been evicted at ${time}.`;
 
-  return wrapMessage(message);
+  return wrapMessage(config, message);
 }
