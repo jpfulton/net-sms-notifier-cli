@@ -51,16 +51,20 @@ function createFileAsNeeded(
       fs.rmSync(fullConfigurationFilePath);
     }
 
-    console.log(chalk.blue("Creating configuration file from template."));
-    const fileFd = fs.openSync(
-      fullConfigurationFilePath,
-      fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_RDWR,
-      CONFIGURATION_FILE_PERMISSIONS
-    );
-
-    fs.writeFileSync(fileFd, CONFIGURATION_FILE_TEMPLATE);
-    fs.closeSync(fileFd);
+    createFileFromTemplate(fullConfigurationFilePath);
   }
+}
+
+function createFileFromTemplate(fullConfigurationFilePath: string) {
+  console.log(chalk.blue("Creating configuration file from template."));
+  const fileFd = fs.openSync(
+    fullConfigurationFilePath,
+    fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_RDWR,
+    CONFIGURATION_FILE_PERMISSIONS
+  );
+
+  fs.writeFileSync(fileFd, CONFIGURATION_FILE_TEMPLATE);
+  fs.closeSync(fileFd);
 }
 
 function correctFilePermissionsAsNeeded(fullConfigurationFilePath: string) {
