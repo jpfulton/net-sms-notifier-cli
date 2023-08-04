@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import chalk from "chalk";
 import { program } from "commander";
 
 import { eviction } from "./commands/eviction.js";
@@ -32,6 +33,6 @@ program
 try {
   program.parse();
 } catch (error) {
-  console.error((error as Error).message);
+  console.error(chalk.red.bold((error as Error).message));
   process.exit(1);
 }
