@@ -45,7 +45,12 @@ export function readConfigurationFromDefaultPath(): Configuration {
 
 export function validateConfiguration(): boolean {
   const config = readConfiguration(getDefaultConfigurationPath());
+  return validateConfigurationFromObject(config);
+}
 
+export function validateConfigurationFromObject(
+  config: Configuration
+): boolean {
   const exampleConfig: Configuration = JSON.parse(CONFIGURATION_FILE_TEMPLATE);
 
   if (JSON.stringify(config) === JSON.stringify(exampleConfig)) {
