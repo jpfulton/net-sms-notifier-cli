@@ -5,6 +5,9 @@ import path from "path";
 export const CONFIGURATION_DIR = "/etc/sms-notifier";
 export const CONFIGURATION_FILE = "notifier.json";
 
+export const CONFIGURATION_DIR_PERMISSIONS = 0o755;
+export const CONFIGURATION_FILE_PERMISSIONS = 0o640;
+
 export const CONFIGURATION_FILE_TEMPLATE = `{
   "accountSid": "ACCOUNT_SID",
   "authToken": "AUTH_TOKEN",
