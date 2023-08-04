@@ -8,8 +8,15 @@ import {
   CONFIGURATION_FILE_TEMPLATE,
 } from "../utils/configuration.js";
 
-export async function init(): Promise<void> {
+export function init(options: { force: boolean }): void {
+  const forceMode = options.force;
+
   console.log(chalk.blue.bold("Creating configuration directory and files."));
+  if (forceMode) {
+    console.log(
+      chalk.red.bold("Using force mode to overwrite configuration files.")
+    );
+  }
 
   fs.access(CONFIGURATION_DIR, (error) => {
     if (error) {
@@ -31,7 +38,7 @@ export async function init(): Promise<void> {
   );
 
   fs.access(fullConfigurationFilePath, (error) => {
-    if (error) {
+    if (error || forceMode) {
       console.log(chalk.blue("Creating configuration file from template."));
       fs.writeFile(
         fullConfigurationFilePath,

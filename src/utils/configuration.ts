@@ -39,7 +39,7 @@ export function validateConfiguration(): boolean {
     return false;
   }
 
-  if (config.toNumbers.length === 0) {
+  if (config.toNumbers && config.toNumbers.length === 0) {
     console.log(chalk.red("No send numbers exist in configuration file."));
     return false;
   }
