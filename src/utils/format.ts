@@ -1,3 +1,5 @@
-export function wrapMessage(message: string): string {
-  return `J. Patrick Fulton: ${message} Reply STOP to unsubscribe.`;
+import { Configuration } from "./configuration.js";
+
+export function wrapMessage(config: Configuration, message: string): string {
+  return `${config.brandIdentifier}: ${message} Reply STOP to unsubscribe.`;
 }
