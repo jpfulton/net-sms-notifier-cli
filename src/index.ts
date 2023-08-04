@@ -5,6 +5,7 @@ import { program } from "commander";
 
 import { eviction } from "./commands/eviction.js";
 import { init } from "./commands/init.js";
+import { restarted } from "./commands/restarted.js";
 import { validate } from "./commands/validate.js";
 
 if (process && process.getuid && process.getuid() !== 0) {
@@ -34,6 +35,12 @@ program
   .option("-f, --force", "Overwrite existing configuration file if it exists.")
   .description("Create configuration directory and files.")
   .action(init);
+
+program
+  .command("restarted")
+  .argument("<serverName>", "Server name being restarted.")
+  .description("Notify via SMS regarding a server restart.")
+  .action(restarted);
 
 program
   .command("validate")
