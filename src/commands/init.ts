@@ -9,6 +9,7 @@ import {
   CONFIGURATION_FILE_PERMISSIONS,
   CONFIGURATION_FILE_TEMPLATE,
 } from "../utils/configuration.js";
+import { convertModeToPermissions } from "../utils/file-permissions.js";
 
 export function init(options: { force: boolean }): void {
   const forceMode = options.force;
@@ -123,8 +124,4 @@ function createDirectoryAsNeeded() {
   } else {
     console.log(chalk.red("Configuration directory exists."));
   }
-}
-
-function convertModeToPermissions(mode: number) {
-  return "0" + (mode & parseInt("777", 8)).toString(8);
 }
