@@ -2,6 +2,8 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 
+import { isValidE164Number } from "./twilio.js";
+
 export const CONFIGURATION_DIR = "/etc/sms-notifier";
 export const CONFIGURATION_FILE = "notifier.json";
 
@@ -56,6 +58,24 @@ export function validateConfiguration(): boolean {
   if (config.toNumbers && config.toNumbers.length === 0) {
     console.log(chalk.red("No send numbers exist in configuration file."));
     return false;
+  }
+
+  if (config.toNumbers && config.toNumbers.length !== 0) {
+    let allValid = true;
+    config.toNumbers.forEach((number) => {
+      const isValid = isValidE164Number(number);
+
+      if (!isValid) {
+        console.error(
+          chalk.red(
+            `Found phone number in configuration file that is not in E.164 format: ${number}`
+          )
+        );
+        allValid = false;
+      }
+    });
+
+    if (!allValid) return false;
   }
 
   return true;

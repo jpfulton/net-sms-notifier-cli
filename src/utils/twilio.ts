@@ -27,3 +27,8 @@ export function sendMessage(config: Configuration, message: string) {
     });
   });
 }
+
+export function isValidE164Number(number: string): boolean {
+  const regex = /^\+?[1-9]\d{1,14}$/;
+  return regex.test(number);
+}
