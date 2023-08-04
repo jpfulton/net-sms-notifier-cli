@@ -3,6 +3,7 @@ import chalk from "chalk";
 import {
   Configuration,
   readConfigurationFromDefaultPath,
+  validateConfigurationFromObject,
 } from "../utils/configuration.js";
 import { wrapMessage } from "../utils/format.js";
 import { sendMessage } from "../utils/twilio.js";
@@ -11,8 +12,12 @@ export function eviction(serverName: string): void {
   console.log(chalk.blue.bold("Notifying administrators of eviction."));
 
   const config = readConfigurationFromDefaultPath();
-  const message = createMessage(config, serverName);
+  if (!validateConfigurationFromObject(config)) {
+    console.error(chalk.red.bold("Invalid configuration file. Exiting."));
+    throw new Error("Invalid configuration file.");
+  }
 
+  const message = createMessage(config, serverName);
   sendMessage(config, message);
 }
 
