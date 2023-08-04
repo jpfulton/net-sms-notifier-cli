@@ -21,14 +21,23 @@ export interface Configuration {
   toNumbers: string[];
 }
 
+export function getDefaultConfigurationPath(): string {
+  const configPath = path.join(CONFIGURATION_DIR, CONFIGURATION_FILE);
+  return configPath;
+}
+
 export function readConfiguration(path: string): Configuration {
   const rawData = fs.readFileSync(path, "utf8");
   return JSON.parse(rawData);
 }
 
+export function readConfigurationFromDefaultPath(): Configuration {
+  const path = getDefaultConfigurationPath();
+  return readConfiguration(path);
+}
+
 export function validateConfiguration(): boolean {
-  const configPath = path.join(CONFIGURATION_DIR, CONFIGURATION_FILE);
-  const config = readConfiguration(configPath);
+  const config = readConfiguration(getDefaultConfigurationPath());
 
   const exampleConfig: Configuration = JSON.parse(CONFIGURATION_FILE_TEMPLATE);
 
