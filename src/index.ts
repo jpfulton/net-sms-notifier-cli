@@ -6,6 +6,10 @@ import { eviction } from "./commands/eviction.js";
 import { init } from "./commands/init.js";
 import { validate } from "./commands/validate.js";
 
+program.description(
+  "A CLI for sending SMS notifications to system administrators."
+);
+
 program
   .command("eviction")
   .argument("<serverName>", "Server name being evicted.")
