@@ -40,28 +40,30 @@ export function init(options: { force: boolean }): void {
   fs.access(fullConfigurationFilePath, (error) => {
     if (error || forceMode) {
       console.log(chalk.blue("Creating configuration file from template."));
-      fs.writeFile(
-        fullConfigurationFilePath,
-        CONFIGURATION_FILE_TEMPLATE,
-        (error) => {
-          if (error) {
-            console.error(
-              chalk.red("Failed to write configuration file template.")
-            );
-            throw error;
-          }
 
-          console.log(chalk.blue("Setting configuration file permissions."));
-          fs.chmod(fullConfigurationFilePath, 0o640, (error) => {
-            if (error) {
-              console.error(
-                chalk.red("Failed to set configuration file permissions.")
-              );
-              throw error;
-            }
-          });
-        }
+      if (forceMode && fs.existsSync(fullConfigurationFilePath)) {
+        console.log(chalk.blue("Removing existing configuration file."));
+        fs.rmSync(fullConfigurationFilePath);
+      }
+
+      const fd = fs.openSync(
+        fullConfigurationFilePath,
+        fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_RDWR,
+        0o640
       );
+
+      fs.writeFile(fd, CONFIGURATION_FILE_TEMPLATE, (error) => {
+        if (error) {
+          console.error(
+            chalk.red("Failed to write configuration file template.")
+          );
+
+          fs.closeSync(fd);
+          throw error;
+        }
+
+        fs.closeSync(fd);
+      });
     } else {
       console.log(chalk.red("Configuration file exists."));
     }
