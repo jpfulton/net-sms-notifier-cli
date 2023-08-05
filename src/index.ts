@@ -7,6 +7,7 @@ import { eviction } from "./commands/eviction.js";
 import { init } from "./commands/init.js";
 import { restarted } from "./commands/restarted.js";
 import { validate } from "./commands/validate.js";
+import { vpnAttempt } from "./commands/vpn-attempt.js";
 
 if (process && process.getuid && process.getuid() !== 0) {
   console.error(
@@ -46,6 +47,20 @@ program
   .command("validate")
   .description("Validate the configuration file.")
   .action(validate);
+
+program
+  .command("vpn-attempt")
+  .requiredOption("-i, --ip <ipAddress>", "Incoming IP address.")
+  .requiredOption(
+    "-n, --certificateCN <certificateCN>",
+    "Incoming certificate CN field."
+  )
+  .option(
+    "-e, --certificateEmail <certificateEmailAddress>",
+    "Incoming certificate emailAddress field."
+  )
+  .description("Notify via SMS regarding a VPN connection attempt.")
+  .action(vpnAttempt);
 
 try {
   program.parse();
