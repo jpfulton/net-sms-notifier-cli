@@ -11,9 +11,8 @@ import { sendMessage } from "../utils/twilio.js";
 export function vpnAttempt(options: {
   ip: string;
   certificateCN: string;
-  certificateEmail: string;
 }): void {
-  const { ip, certificateCN, certificateEmail } = options;
+  const { ip, certificateCN } = options;
 
   console.log(
     chalk.blue.bold("Notifying administrators of VPN connection attempt.")
@@ -25,26 +24,21 @@ export function vpnAttempt(options: {
     throw new Error("Invalid configuration file.");
   }
 
-  const message = createMessage(config, ip, certificateCN, certificateEmail);
+  const message = createMessage(config, ip, certificateCN);
   sendMessage(config, message);
 }
 
 function createMessage(
   config: Configuration,
   ip: string,
-  certificateCN: string,
-  certificateEmail: string | undefined
+  certificateCN: string
 ): string {
   const now = new Date();
   const time = now.toLocaleTimeString("en-US", {
     timeStyle: "long",
   });
 
-  let message = `Incoming VPN connect attempt from ${ip} using CN-${certificateCN} `;
-  if (certificateEmail) {
-    message += `and ${certificateEmail} `;
-  }
-  message += `at ${time}.`;
+  const message = `Incoming VPN connect attempt from ${ip} using CN-${certificateCN} at ${time}.`;
 
   return wrapMessage(config, message);
 }

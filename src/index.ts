@@ -57,10 +57,6 @@ program
     "-n, --certificateCN <certificateCN>",
     "Incoming certificate CN field."
   )
-  .option(
-    "-e, --certificateEmail <certificateEmailAddress>",
-    "Incoming certificate emailAddress field."
-  )
   .description("Notify via SMS regarding a VPN connection attempt.")
   .action(vpnAttempt);
 
