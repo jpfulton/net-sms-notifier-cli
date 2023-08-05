@@ -8,6 +8,7 @@ import { init } from "./commands/init.js";
 import { restarted } from "./commands/restarted.js";
 import { validate } from "./commands/validate.js";
 import { vpnAttempt } from "./commands/vpn-attempt.js";
+import { vpnConnection } from "./commands/vpn-connection.js";
 
 if (process && process.getuid && process.getuid() !== 0) {
   console.error(
@@ -61,6 +62,16 @@ program
   )
   .description("Notify via SMS regarding a VPN connection attempt.")
   .action(vpnAttempt);
+
+program
+  .command("vpn-connection")
+  .requiredOption("-i, --ip <ipAddress>", "Incoming IP address.")
+  .requiredOption(
+    "-n, --certificateCN <certificateCN>",
+    "Incoming certificate CN field."
+  )
+  .description("Notify via SMS regarding a VPN connection success.")
+  .action(vpnConnection);
 
 try {
   program.parse();
