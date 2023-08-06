@@ -38,7 +38,7 @@ function createMessage(
     timeStyle: "long",
   });
 
-  const message = `VPN disconnection from ${ip} using CN-${certificateCN} at ${time}.`;
+  const message = `VPN disconnection from ${ip} using CN=${certificateCN} at ${time}.`;
 
   return wrapMessage(config, message);
 }
