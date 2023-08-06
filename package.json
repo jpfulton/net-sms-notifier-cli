@@ -1,6 +1,6 @@
 {
   "name": "@jpfulton/net-sms-notifier-cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Twilio-based SMS notifier CLI for network administration.",
   "main": "./dist",
   "repository": "git@github.com:jpfulton/net-sms-notifier-cli.git",
