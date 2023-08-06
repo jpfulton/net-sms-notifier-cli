@@ -38,7 +38,7 @@ function createMessage(
     timeStyle: "long",
   });
 
-  const message = `Incoming VPN connect attempt from ${ip} using CN-${certificateCN} at ${time}.`;
+  const message = `VPN connection attempt from ${ip} using ${certificateCN} at ${time}.`;
 
   return wrapMessage(config, message);
 }
