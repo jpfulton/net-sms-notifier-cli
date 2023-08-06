@@ -8,7 +8,7 @@ import {
 import { wrapMessage } from "../utils/format.js";
 import { sendMessage } from "../utils/twilio.js";
 
-export function vpnAttempt(options: {
+export function vpnUnauthorizedAttempt(options: {
   ip: string;
   certificateCN: string;
 }): void {
@@ -38,7 +38,7 @@ function createMessage(
     timeStyle: "long",
   });
 
-  const message = `VPN connection attempt from ${ip} using ${certificateCN} at ${time}.`;
+  const message = `Bad VPN connection attempt from ${ip} using ${certificateCN} at ${time}.`;
 
   return wrapMessage(config, message);
 }

@@ -7,9 +7,9 @@ import { eviction } from "./commands/eviction.js";
 import { init } from "./commands/init.js";
 import { restarted } from "./commands/restarted.js";
 import { validate } from "./commands/validate.js";
-import { vpnAttempt } from "./commands/vpn-attempt.js";
 import { vpnConnection } from "./commands/vpn-connection.js";
 import { vpnDisconnection } from "./commands/vpn-disconnection.js";
+import { vpnUnauthorizedAttempt } from "./commands/vpn-unauthorized-attempt.js";
 
 if (process && process.getuid && process.getuid() !== 0) {
   console.error(
@@ -51,14 +51,14 @@ program
   .action(validate);
 
 program
-  .command("vpn-attempt")
+  .command("vpn-bad-attempt")
   .requiredOption("-i, --ip <ipAddress>", "Incoming IP address.")
   .requiredOption(
     "-n, --certificateCN <certificateCN>",
     "Incoming certificate CN field."
   )
-  .description("Notify via SMS regarding a VPN connection attempt.")
-  .action(vpnAttempt);
+  .description("Notify via SMS regarding a bad VPN connection attempt.")
+  .action(vpnUnauthorizedAttempt);
 
 program
   .command("vpn-connection")
