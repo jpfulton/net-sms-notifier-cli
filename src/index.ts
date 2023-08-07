@@ -62,7 +62,7 @@ program
   .action(vpnUnauthorizedAttempt);
 
 program
-  .command("vpn-bad-attempt")
+  .command("vpn-client-fw-test-fail")
   .requiredOption("-i, --ip <ipAddress>", "Incoming IP address.")
   .requiredOption(
     "-n, --certificateCN <certificateCN>",
