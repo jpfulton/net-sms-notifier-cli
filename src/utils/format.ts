@@ -1,5 +1,10 @@
 import { Configuration } from "./configuration.js";
+import { RegulatoryMessageSuffix, TwilioMessage } from "./twilio.js";
 
-export function wrapMessage(config: Configuration, message: string): string {
-  return `${config.brandIdentifier}: ${message} Reply STOP to unsubscribe.`;
+export function wrapMessage(
+  config: Configuration,
+  message: string
+): TwilioMessage {
+  const twilioMessage: TwilioMessage = `${config.brandIdentifier}: ${message} ${RegulatoryMessageSuffix.Default}`;
+  return twilioMessage;
 }

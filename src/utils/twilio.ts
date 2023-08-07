@@ -6,6 +6,11 @@ import {
   readConfigurationFromDefaultPath,
 } from "./configuration.js";
 
+export enum RegulatoryMessageSuffix {
+  Default = "Reply STOP to unsubscribe.",
+}
+export type TwilioMessage = `${string}: ${string} ${RegulatoryMessageSuffix}`;
+
 export function getTwilioClient() {
   const config = readConfigurationFromDefaultPath();
   return getTwilioClientFromConfiguration(config);
@@ -16,7 +21,7 @@ export function getTwilioClientFromConfiguration(config: Configuration) {
   return client;
 }
 
-export function sendMessage(config: Configuration, message: string) {
+export function sendMessage(config: Configuration, message: TwilioMessage) {
   const client = getTwilioClientFromConfiguration(config);
 
   config.toNumbers.forEach(async (number) => {
