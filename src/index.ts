@@ -7,6 +7,7 @@ import { eviction } from "./commands/eviction.js";
 import { init } from "./commands/init.js";
 import { restarted } from "./commands/restarted.js";
 import { validate } from "./commands/validate.js";
+import { vpnClientFirewallTestFail } from "./commands/vpn-client-fw-test-fail.js";
 import { vpnConnection } from "./commands/vpn-connection.js";
 import { vpnDisconnection } from "./commands/vpn-disconnection.js";
 import { vpnUnauthorizedAttempt } from "./commands/vpn-unauthorized-attempt.js";
@@ -59,6 +60,16 @@ program
   )
   .description("Notify via SMS regarding a bad VPN connection attempt.")
   .action(vpnUnauthorizedAttempt);
+
+program
+  .command("vpn-client-fw-test-fail")
+  .requiredOption("-i, --ip <ipAddress>", "Incoming IP address.")
+  .requiredOption(
+    "-n, --certificateCN <certificateCN>",
+    "Incoming certificate CN field."
+  )
+  .description("Notify via SMS regarding a VPN client firewall test fail.")
+  .action(vpnClientFirewallTestFail);
 
 program
   .command("vpn-connection")
