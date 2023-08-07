@@ -6,7 +6,7 @@ import {
   validateConfigurationFromObject,
 } from "../utils/configuration.js";
 import { wrapMessage } from "../utils/format.js";
-import { sendMessage } from "../utils/twilio.js";
+import { TwilioMessage, sendMessage } from "../utils/twilio.js";
 
 export function vpnClientFirewallTestFail(options: {
   ip: string;
@@ -34,7 +34,7 @@ function createMessage(
   config: Configuration,
   ip: string,
   certificateCN: string
-): string {
+): TwilioMessage {
   const now = new Date();
   const time = now.toLocaleTimeString("en-US", {
     timeStyle: "long",

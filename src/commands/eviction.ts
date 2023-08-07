@@ -6,7 +6,7 @@ import {
   validateConfigurationFromObject,
 } from "../utils/configuration.js";
 import { wrapMessage } from "../utils/format.js";
-import { sendMessage } from "../utils/twilio.js";
+import { TwilioMessage, sendMessage } from "../utils/twilio.js";
 
 export function eviction(serverName: string): void {
   console.log(chalk.blue.bold("Notifying administrators of eviction."));
@@ -21,7 +21,10 @@ export function eviction(serverName: string): void {
   sendMessage(config, message);
 }
 
-function createMessage(config: Configuration, serverName: string): string {
+function createMessage(
+  config: Configuration,
+  serverName: string
+): TwilioMessage {
   const now = new Date();
   const time = now.toLocaleTimeString("en-US", {
     timeStyle: "long",
