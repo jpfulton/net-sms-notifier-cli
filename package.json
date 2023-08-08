@@ -2,6 +2,12 @@
   "name": "@jpfulton/net-sms-notifier-cli",
   "version": "0.0.11",
   "description": "A Twilio-based SMS notifier CLI for network administration.",
+  "keywords": [
+    "twilio",
+    "sms",
+    "administration",
+    "cli"
+  ],
   "main": "./dist",
   "repository": "git@github.com:jpfulton/net-sms-notifier-cli.git",
   "author": "J. Patrick Fulton <jpatrick.fulton@gmail.com>",
@@ -31,7 +37,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
-    "link": "yarn build && sudo npm link",
+    "link": "yarn build && sudo yarn link",
     "lint": "eslint . --fix"
   }
 }
