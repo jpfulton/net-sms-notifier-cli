@@ -8,8 +8,10 @@ import {
   CONFIGURATION_FILE,
   CONFIGURATION_FILE_PERMISSIONS,
   CONFIGURATION_FILE_TEMPLATE,
+  WIN_CONFIGURATION_DIR,
 } from "../utils/configuration.js";
 import { convertModeToPermissions } from "../utils/file-permissions.js";
+import { isWin } from "../utils/platform.js";
 
 export function init(options: { force: boolean }): void {
   const forceMode = options.force;
@@ -28,10 +30,9 @@ export function init(options: { force: boolean }): void {
 }
 
 function fileOperations(forceMode: boolean) {
-  const fullConfigurationFilePath = path.join(
-    CONFIGURATION_DIR,
-    CONFIGURATION_FILE
-  );
+  const fullConfigurationFilePath = isWin
+    ? path.join(WIN_CONFIGURATION_DIR, CONFIGURATION_FILE)
+    : path.join(CONFIGURATION_DIR, CONFIGURATION_FILE);
 
   createFileAsNeeded(fullConfigurationFilePath, forceMode);
   correctFilePermissionsAsNeeded(fullConfigurationFilePath);
@@ -93,8 +94,10 @@ function directoryOperations() {
 }
 
 function correctDirectoryPermissionsAsNeeded() {
+  const configurationDir = isWin ? WIN_CONFIGURATION_DIR : CONFIGURATION_DIR;
+
   console.log(chalk.blue("Checking configuration directory permissions."));
-  const dirFd = fs.openSync(CONFIGURATION_DIR, fs.constants.O_DIRECTORY);
+  const dirFd = fs.openSync(configurationDir, fs.constants.O_DIRECTORY);
   const dirStats = fs.fstatSync(dirFd);
   fs.closeSync(dirFd);
 
@@ -107,15 +110,17 @@ function correctDirectoryPermissionsAsNeeded() {
         `Configuration directory permissions incorrect. Currently: ${dirPermissions} Fixing...`
       )
     );
-    fs.chmodSync(CONFIGURATION_DIR, CONFIGURATION_DIR_PERMISSIONS);
+    fs.chmodSync(configurationDir, CONFIGURATION_DIR_PERMISSIONS);
   }
 }
 
 function createDirectoryAsNeeded() {
-  const dirExists = fs.existsSync(CONFIGURATION_DIR);
+  const configurationDir = isWin ? WIN_CONFIGURATION_DIR : CONFIGURATION_DIR;
+
+  const dirExists = fs.existsSync(configurationDir);
   if (!dirExists) {
     console.log(chalk.blue("Creating configuration directory."));
-    fs.mkdir(CONFIGURATION_DIR, CONFIGURATION_DIR_PERMISSIONS, (error) => {
+    fs.mkdir(configurationDir, CONFIGURATION_DIR_PERMISSIONS, (error) => {
       if (error) {
         console.error(chalk.red("Failed to create configuration directory."));
         throw error;
