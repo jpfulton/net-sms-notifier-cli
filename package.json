@@ -40,6 +40,6 @@
     "link": "yarn build && sudo yarn link",
     "unlink": "sudo yarn unlink",
     "lint": "eslint . --fix",
-    "execute": "node ./dist/index.js"
+    "execute": "yarn build && node ./dist/index.js"
   }
 }
