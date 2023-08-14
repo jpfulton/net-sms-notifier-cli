@@ -38,7 +38,8 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "link": "yarn build && sudo yarn link",
-    "link-win": "yarn build && yarn link",
-    "lint": "eslint . --fix"
+    "unlink": "sudo yarn unlink",
+    "lint": "eslint . --fix",
+    "execute": "node ./dist/index.js"
   }
 }
