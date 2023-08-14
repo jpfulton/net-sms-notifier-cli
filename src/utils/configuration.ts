@@ -1,10 +1,13 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
+import { env } from "process";
 
+import { isWin } from "./platform.js";
 import { isValidE164Number } from "./twilio.js";
 
 export const CONFIGURATION_DIR = "/etc/sms-notifier";
+export const WIN_CONFIGURATION_DIR = `${env.ALLUSERSPROFILE}/sms-notifier`;
 export const CONFIGURATION_FILE = "notifier.json";
 
 export const CONFIGURATION_DIR_PERMISSIONS = 0o755;
@@ -29,7 +32,9 @@ export interface Configuration {
 }
 
 export function getDefaultConfigurationPath(): string {
-  const configPath = path.join(CONFIGURATION_DIR, CONFIGURATION_FILE);
+  const configPath = isWin
+    ? path.join(WIN_CONFIGURATION_DIR, CONFIGURATION_FILE)
+    : path.join(CONFIGURATION_DIR, CONFIGURATION_FILE);
   return configPath;
 }
 
