@@ -95,5 +95,10 @@ try {
   program.parse();
 } catch (error) {
   console.error(chalk.red.bold((error as Error).message));
+
+  if ((error as Error).message === "Invalid configuration file.") {
+    process.exit(0); // gracefully exit on bad config
+  }
+
   process.exit(1);
 }
