@@ -1,6 +1,6 @@
 {
   "name": "@jpfulton/net-sms-notifier-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Twilio-based SMS notifier CLI for network administration.",
   "keywords": [
     "twilio",
