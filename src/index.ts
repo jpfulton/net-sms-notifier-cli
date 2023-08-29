@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import chalk from "chalk";
-import { program } from "commander";
+import { CommanderError, program } from "commander";
 
 import { eviction } from "./commands/eviction.js";
 import { init } from "./commands/init.js";
@@ -11,6 +11,7 @@ import { vpnClientFirewallTestFail } from "./commands/vpn-client-fw-test-fail.js
 import { vpnConnection } from "./commands/vpn-connection.js";
 import { vpnDisconnection } from "./commands/vpn-disconnection.js";
 import { vpnUnauthorizedAttempt } from "./commands/vpn-unauthorized-attempt.js";
+import { INVALID_CONFIGURATION_ERROR_CODE } from "./utils/configuration.js";
 
 if (process && process.getuid && process.getuid() !== 0) {
   console.error(
@@ -26,7 +27,7 @@ program.description(
   "A CLI for sending SMS notifications to system administrators."
 );
 
-program.exitOverride();
+program.showHelpAfterError();
 
 program
   .command("eviction")
@@ -92,13 +93,20 @@ program
   .action(vpnDisconnection);
 
 try {
-  program.parse();
+  await program.parseAsync();
 } catch (error) {
-  console.error(chalk.red.bold((error as Error).message));
+  if (error instanceof CommanderError) {
+    const commanderError = error as CommanderError;
 
-  if ((error as Error).message === "Invalid configuration file.") {
-    process.exit(0); // gracefully exit on bad config
+    if (commanderError.code === INVALID_CONFIGURATION_ERROR_CODE) {
+      console.log(chalk.red.bold(commanderError.message));
+    } else if (commanderError.code !== "commander.help") {
+      console.error(chalk.red.bold(commanderError.message));
+    }
+
+    process.exit(commanderError.exitCode);
+  } else {
+    console.error(chalk.red.bold((error as Error).message));
+    process.exit(1);
   }
-
-  process.exit(1);
 }

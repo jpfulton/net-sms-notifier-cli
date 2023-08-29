@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { env } from "process";
 
+import { CommanderError } from "commander";
 import { isWin } from "./platform.js";
 import { isValidE164Number } from "./twilio.js";
 
@@ -39,8 +40,12 @@ export function getDefaultConfigurationPath(): string {
 }
 
 export function readConfiguration(path: string): Configuration {
-  const rawData = fs.readFileSync(path, "utf8");
-  return JSON.parse(rawData);
+  try {
+    const rawData = fs.readFileSync(path, "utf8");
+    return JSON.parse(rawData);
+  } catch (error) {
+    throw new InvalidConfigurationError("Configuration file not found.");
+  }
 }
 
 export function readConfigurationFromDefaultPath(): Configuration {
@@ -92,12 +97,15 @@ export function validateConfigurationFromObject(config: Configuration): void {
   return;
 }
 
-export class InvalidConfigurationError extends Error {
+export const INVALID_CONFIGURATION_ERROR_CODE =
+  "net-sms-notifier-cli.invalidConfiguration";
+
+export class InvalidConfigurationError extends CommanderError {
   constructor(message: string) {
     if (message) {
-      super(message);
+      super(0, INVALID_CONFIGURATION_ERROR_CODE, message);
     } else {
-      super("Invalid configuration file.");
+      super(0, INVALID_CONFIGURATION_ERROR_CODE, "Invalid configuration file.");
     }
 
     // capture stacktrace in Node.js
