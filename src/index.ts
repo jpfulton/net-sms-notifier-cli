@@ -109,7 +109,7 @@ try {
   } else {
     const error = e as Error;
 
-    // this is a hard exception
+    // this is a hard (unexpected) error
     // output message and stack trace, exiting with error code
     console.error(chalk.red.bold(`Message: ${error.message}`));
 
