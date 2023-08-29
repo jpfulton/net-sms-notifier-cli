@@ -36,3 +36,6 @@ examples
 # GitHub and VS Code directories
 .github
 .vscode
+
+# Modern Yarn directory
+.yarn
