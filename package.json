@@ -35,8 +35,10 @@
   },
   "scripts": {
     "build": "tsc",
+    "build-debug": "tsc --project tsconfig.debug.json",
     "clean": "rm -rf dist",
     "lint": "eslint . --fix",
-    "execute": "yarn build && sudo node ./dist/index.js"
+    "execute": "yarn clean && yarn build && sudo node ./dist/index.js",
+    "debug": "yarn clean && yarn build-debug && sudo node --inspect-brk ./dist/index.js"
   }
 }
