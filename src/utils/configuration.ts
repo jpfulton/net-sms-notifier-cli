@@ -48,26 +48,24 @@ export function readConfigurationFromDefaultPath(): Configuration {
   return readConfiguration(path);
 }
 
-export function validateConfiguration(): boolean {
+export function validateConfiguration(): void {
   const config = readConfiguration(getDefaultConfigurationPath());
-  return validateConfigurationFromObject(config);
+  validateConfigurationFromObject(config);
 }
 
-export function validateConfigurationFromObject(
-  config: Configuration
-): boolean {
+export function validateConfigurationFromObject(config: Configuration): void {
   const exampleConfig: Configuration = JSON.parse(CONFIGURATION_FILE_TEMPLATE);
 
   if (JSON.stringify(config) === JSON.stringify(exampleConfig)) {
-    console.log(
-      chalk.red("Configuration file is still identical to template.")
+    throw new InvalidConfigurationError(
+      "Configuration file is still identical to template."
     );
-    return false;
   }
 
   if (config.toNumbers && config.toNumbers.length === 0) {
-    console.log(chalk.red("No send numbers exist in configuration file."));
-    return false;
+    throw new InvalidConfigurationError(
+      "No send numbers exist in configuration file."
+    );
   }
 
   if (config.toNumbers && config.toNumbers.length !== 0) {
@@ -85,8 +83,25 @@ export function validateConfigurationFromObject(
       }
     });
 
-    if (!allValid) return false;
+    if (!allValid)
+      throw new InvalidConfigurationError(
+        "Found at least one phone number that is not in E.164 format."
+      );
   }
 
-  return true;
+  return;
+}
+
+export class InvalidConfigurationError extends Error {
+  constructor(message: string) {
+    if (message) {
+      super(message);
+    } else {
+      super("Invalid configuration file.");
+    }
+
+    // capture stacktrace in Node.js
+    Error.captureStackTrace(this, this.constructor);
+    this.name = this.constructor.name;
+  }
 }
