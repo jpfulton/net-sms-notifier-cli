@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { env } from "process";
 
+import { CommanderError } from "commander";
 import { isWin } from "./platform.js";
 import { isValidE164Number } from "./twilio.js";
 
@@ -39,8 +40,12 @@ export function getDefaultConfigurationPath(): string {
 }
 
 export function readConfiguration(path: string): Configuration {
-  const rawData = fs.readFileSync(path, "utf8");
-  return JSON.parse(rawData);
+  try {
+    const rawData = fs.readFileSync(path, "utf8");
+    return JSON.parse(rawData);
+  } catch (error) {
+    throw new InvalidConfigurationError("Configuration file not found.");
+  }
 }
 
 export function readConfigurationFromDefaultPath(): Configuration {
@@ -48,26 +53,24 @@ export function readConfigurationFromDefaultPath(): Configuration {
   return readConfiguration(path);
 }
 
-export function validateConfiguration(): boolean {
+export function validateConfiguration(): void {
   const config = readConfiguration(getDefaultConfigurationPath());
-  return validateConfigurationFromObject(config);
+  validateConfigurationFromObject(config);
 }
 
-export function validateConfigurationFromObject(
-  config: Configuration
-): boolean {
+export function validateConfigurationFromObject(config: Configuration): void {
   const exampleConfig: Configuration = JSON.parse(CONFIGURATION_FILE_TEMPLATE);
 
   if (JSON.stringify(config) === JSON.stringify(exampleConfig)) {
-    console.log(
-      chalk.red("Configuration file is still identical to template.")
+    throw new InvalidConfigurationError(
+      "Configuration file is still identical to template."
     );
-    return false;
   }
 
   if (config.toNumbers && config.toNumbers.length === 0) {
-    console.log(chalk.red("No send numbers exist in configuration file."));
-    return false;
+    throw new InvalidConfigurationError(
+      "No send numbers exist in configuration file."
+    );
   }
 
   if (config.toNumbers && config.toNumbers.length !== 0) {
@@ -85,8 +88,34 @@ export function validateConfigurationFromObject(
       }
     });
 
-    if (!allValid) return false;
+    if (!allValid)
+      throw new InvalidConfigurationError(
+        "Found at least one phone number that is not in E.164 format."
+      );
   }
 
-  return true;
+  return;
+}
+
+const INVALID_CONFIGURATION_ERROR_CODE =
+  "net-sms-notifier-cli.invalidConfiguration";
+
+/**
+ * Error class for handling invalid configurations in a graceful
+ * fashion. This error type suggests an exit code of 0 when
+ * thrown. Throw another Error type to force a process exit
+ * with an error code.
+ */
+export class InvalidConfigurationError extends CommanderError {
+  constructor(message: string) {
+    if (message) {
+      super(0, INVALID_CONFIGURATION_ERROR_CODE, message);
+    } else {
+      super(0, INVALID_CONFIGURATION_ERROR_CODE, "Invalid configuration file.");
+    }
+
+    // capture stacktrace in Node.js
+    Error.captureStackTrace(this, this.constructor);
+    this.name = this.constructor.name;
+  }
 }

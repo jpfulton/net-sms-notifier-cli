@@ -4,10 +4,12 @@ import { validateConfiguration } from "../utils/configuration.js";
 export function validate(): void {
   console.log(chalk.blue.bold("Validating configuration file."));
 
-  if (validateConfiguration()) {
-    console.log(chalk.green("Configuration file appears valid."));
-  } else {
-    console.error(chalk.red("Configuration file is invalid."));
-    throw new Error("Invalid configuration.");
+  try {
+    validateConfiguration();
+  } catch (error) {
+    // throw an error that forces a process exit with an error code
+    throw new Error("Invalid configuration file.", {
+      cause: (error as Error).message,
+    });
   }
 }

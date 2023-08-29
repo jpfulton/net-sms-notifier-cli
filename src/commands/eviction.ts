@@ -12,10 +12,7 @@ export function eviction(serverName: string): void {
   console.log(chalk.blue.bold("Notifying administrators of eviction."));
 
   const config = readConfigurationFromDefaultPath();
-  if (!validateConfigurationFromObject(config)) {
-    console.error(chalk.red.bold("Invalid configuration file. Exiting."));
-    throw new Error("Invalid configuration file.");
-  }
+  validateConfigurationFromObject(config);
 
   const message = createMessage(config, serverName);
   sendMessage(config, message);
