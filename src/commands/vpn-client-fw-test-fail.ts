@@ -21,10 +21,7 @@ export function vpnClientFirewallTestFail(options: {
   );
 
   const config = readConfigurationFromDefaultPath();
-  if (!validateConfigurationFromObject(config)) {
-    console.error(chalk.red.bold("Invalid configuration file. Exiting."));
-    throw new Error("Invalid configuration file.");
-  }
+  validateConfigurationFromObject(config);
 
   const message = createMessage(config, ip, certificateCN);
   sendMessage(config, message);
