@@ -7,6 +7,7 @@ export function validate(): void {
   try {
     validateConfiguration();
   } catch (error) {
+    // throw an error that forces a process exit with an error code
     throw new Error("Invalid configuration file.", {
       cause: (error as Error).message,
     });

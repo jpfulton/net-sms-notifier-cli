@@ -97,9 +97,15 @@ export function validateConfigurationFromObject(config: Configuration): void {
   return;
 }
 
-export const INVALID_CONFIGURATION_ERROR_CODE =
+const INVALID_CONFIGURATION_ERROR_CODE =
   "net-sms-notifier-cli.invalidConfiguration";
 
+/**
+ * Error class for handling invalid configurations in a graceful
+ * fashion. This error type suggests an exit code of 0 when
+ * thrown. Throw another Error type to force a process exit
+ * with an error code.
+ */
 export class InvalidConfigurationError extends CommanderError {
   constructor(message: string) {
     if (message) {
