@@ -11,7 +11,6 @@ import { vpnClientFirewallTestFail } from "./commands/vpn-client-fw-test-fail.js
 import { vpnConnection } from "./commands/vpn-connection.js";
 import { vpnDisconnection } from "./commands/vpn-disconnection.js";
 import { vpnUnauthorizedAttempt } from "./commands/vpn-unauthorized-attempt.js";
-import { INVALID_CONFIGURATION_ERROR_CODE } from "./utils/configuration.js";
 
 if (process && process.getuid && process.getuid() !== 0) {
   console.error(
@@ -94,19 +93,35 @@ program
 
 try {
   await program.parseAsync();
-} catch (error) {
-  if (error instanceof CommanderError) {
-    const commanderError = error as CommanderError;
+} catch (e) {
+  // if the error is a derivative of CommanderError
+  // respect the suggested exitCode and display the error
+  // message in most cases
+  if (e instanceof CommanderError) {
+    const commanderError = e as CommanderError;
 
-    if (commanderError.code === INVALID_CONFIGURATION_ERROR_CODE) {
+    // suppress the "(output help)" message to console, output others
+    if (commanderError.code !== "commander.help") {
       console.log(chalk.red.bold(commanderError.message));
-    } else if (commanderError.code !== "commander.help") {
-      console.error(chalk.red.bold(commanderError.message));
     }
 
     process.exit(commanderError.exitCode);
   } else {
-    console.error(chalk.red.bold((error as Error).message));
+    const error = e as Error;
+
+    // this is a hard exception
+    // output message and stack trace, exiting with error code
+    console.error(chalk.red.bold(`Message: ${error.message}`));
+
+    if (error.cause) {
+      console.error(chalk.bold.red(`Cause: ${error.cause}`));
+    }
+
+    if (error.stack) {
+      console.error(chalk.red.bold("Stacktrace:"));
+      console.error(chalk.red((error as Error).stack));
+    }
+
     process.exit(1);
   }
 }
