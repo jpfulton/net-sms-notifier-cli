@@ -105,6 +105,7 @@ try {
       console.log(chalk.red.bold(commanderError.message));
     }
 
+    // exit with the suggested exit code
     process.exit(commanderError.exitCode);
   } else {
     const error = e as Error;
