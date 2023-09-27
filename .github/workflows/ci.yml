@@ -73,6 +73,9 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      statuses: write
 
     steps:
       - name: Checkout repo
@@ -89,6 +92,8 @@ jobs:
 
       - name: Danger
         if: (github.event_name == 'pull_request' && github.event.action != 'closed')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn danger ci
 
   tag-release-and-publish:
