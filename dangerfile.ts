@@ -39,7 +39,7 @@ export default async () => {
   // Run License Auditor Plugin from local source
   // use a dynamic import to avoid bundling the plugin
   const licenseAuditorModule = await import(
-    "@jpfulton/node-license-auditor-cli/dist/danger/danger-plugin"
+    "@jpfulton/node-license-auditor-cli/dist/danger/danger-plugin.js"
   );
   const licenseAuditor = licenseAuditorModule.default;
   await licenseAuditor({
