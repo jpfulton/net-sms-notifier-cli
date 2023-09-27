@@ -121,7 +121,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpfulton/net-sms-notifier-cli@workspace:."
   dependencies:
-    "@jpfulton/node-license-auditor-cli": ^0.0.31
+    "@jpfulton/node-license-auditor-cli": ^0.0.33
     "@seadub/danger-plugin-eslint": ^3.0.2
     "@tsconfig/node18": ^18.2.1
     "@types/node": ^20.5.7
@@ -139,17 +139,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpfulton/node-license-auditor-cli@npm:^0.0.31":
-  version: 0.0.31
-  resolution: "@jpfulton/node-license-auditor-cli@npm:0.0.31"
+"@jpfulton/node-license-auditor-cli@npm:^0.0.33":
+  version: 0.0.33
+  resolution: "@jpfulton/node-license-auditor-cli@npm:0.0.33"
   dependencies:
     bluebird: ^3.7.2
     chalk: ^5.3.0
     commander: ^11.0.0
     lodash: ^4.17.21
   bin:
-    node-license-auditor-cli: dist/index.js
-  checksum: 68d5d98ece10720649cbb973a70ad7f614f7c03cb8f75ccc46cf2c73886667075e21a9ea6dc5503066f9a000831d7ae4849f543fcce61ba100cdb41ba10991c9
+    license-auditor-cli: dist/index.js
+  checksum: 0ead7e8c3c286ae1743c663e3226a84e14869d5d7cf519d6baae3318da70dd3c4a2f50012b1259e41569e738094a8a3c46daa95ec6ab3b3d1f25168e6d0b6f46
   languageName: node
   linkType: hard
 

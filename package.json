@@ -21,7 +21,7 @@
     "sms-notify-cli": "dist/index.js"
   },
   "devDependencies": {
-    "@jpfulton/node-license-auditor-cli": "^0.0.31",
+    "@jpfulton/node-license-auditor-cli": "^0.0.33",
     "@seadub/danger-plugin-eslint": "^3.0.2",
     "@tsconfig/node18": "^18.2.1",
     "@types/node": "^20.5.7",
