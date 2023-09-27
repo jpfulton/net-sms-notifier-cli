@@ -87,6 +87,10 @@ jobs:
       - name: Compile
         run: yarn && yarn build
 
+      - name: Danger
+        if: (github.event_name == 'pull_request' && github.event.action != 'closed')
+        run: yarn danger ci
+
   tag-release-and-publish:
     name: "Tag, Release and Publish"
     needs: [analyze, compile]
