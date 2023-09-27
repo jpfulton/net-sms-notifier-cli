@@ -39,3 +39,6 @@ examples
 
 # Modern Yarn directory
 .yarn
+
+# Project specific files
+dangerfile.ts
