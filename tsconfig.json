@@ -1,6 +1,12 @@
 {
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ES2022"],
+    "esModuleInterop": true,
+    "target": "ES2022",
     "outDir": "dist"
   },
   "include": ["src"],
