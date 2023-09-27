@@ -1,22 +1,17 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": "latest", // Allows the use of modern ECMAScript features
-    "sourceType": "module" // Allows for the use of imports
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
   "env": {
-    "node": true // Enable Node.js global variables
+    "node": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/stylistic"
   ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
-  "ignorePatterns": [
-    "**/node_modules/**",
-    "/dist/**"
-  ]
+  "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["**/node_modules/**", "/dist/**"]
 }
