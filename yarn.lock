@@ -121,7 +121,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpfulton/net-sms-notifier-cli@workspace:."
   dependencies:
-    "@jpfulton/node-license-auditor-cli": ^0.0.33
+    "@jpfulton/node-license-auditor-cli": ^0.0.34
     "@seadub/danger-plugin-eslint": ^3.0.2
     "@tsconfig/node18": ^18.2.1
     "@types/node": ^20.5.7
@@ -139,17 +139,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpfulton/node-license-auditor-cli@npm:^0.0.33":
-  version: 0.0.33
-  resolution: "@jpfulton/node-license-auditor-cli@npm:0.0.33"
+"@jpfulton/node-license-auditor-cli@npm:^0.0.34":
+  version: 0.0.34
+  resolution: "@jpfulton/node-license-auditor-cli@npm:0.0.34"
   dependencies:
     bluebird: ^3.7.2
     chalk: ^5.3.0
     commander: ^11.0.0
+    filedirname: ^2.7.0
     lodash: ^4.17.21
   bin:
-    license-auditor-cli: dist/index.js
-  checksum: 0ead7e8c3c286ae1743c663e3226a84e14869d5d7cf519d6baae3318da70dd3c4a2f50012b1259e41569e738094a8a3c46daa95ec6ab3b3d1f25168e6d0b6f46
+    license-auditor-cli: dist/program.js
+  checksum: f2ae5770175dfdbab8935f26204a7a1410d76fa1f0ab03c5755be312f6631b875ed29e4b3a4f352b592fddd96185ef37cf32dc3682893becb582662d0bec5f02
   languageName: node
   linkType: hard
 
@@ -1237,6 +1238,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"filedirname@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "filedirname@npm:2.7.0"
+  dependencies:
+    get-current-line: ^6.5.0
+  checksum: 5bc9792199e81600f7df34b1890f41dccb2f6a80d2a8426b7b9bfb11fcd9592f3b6e8b5feb5dd3be38de10b31f3635497946171055bd91f4d53bb814e01b9816
+  languageName: node
+  linkType: hard
+
 "fill-range@npm:^7.0.1":
   version: 7.0.1
   resolution: "fill-range@npm:7.0.1"
@@ -1319,6 +1329,13 @@ __metadata:
   version: 1.1.1
   resolution: "function-bind@npm:1.1.1"
   checksum: b32fbaebb3f8ec4969f033073b43f5c8befbb58f1a79e12f1d7490358150359ebd92f49e72ff0144f65f2c48ea2a605bff2d07965f548f6474fd8efd95bf361a
+  languageName: node
+  linkType: hard
+
+"get-current-line@npm:^6.5.0":
+  version: 6.6.0
+  resolution: "get-current-line@npm:6.6.0"
+  checksum: 0209c0eb8da700de867d51d18c1eaebe3329da522adf1c93f9b7372576e99499abf8eff3b74ff133ad751dd3622c09e1e8702639c6649666934c214433d39de7
   languageName: node
   linkType: hard
 
