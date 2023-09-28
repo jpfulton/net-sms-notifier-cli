@@ -3,7 +3,7 @@ import { danger, warn } from "danger";
 import yarn from "danger-plugin-yarn";
 import fs from "fs";
 
-// import licenseAuditor from "@jpfulton/node-license-auditor-cli/dist/danger/danger-plugin";
+import { licenseAuditor } from "@jpfulton/node-license-auditor-cli";
 
 export default async () => {
   if (!danger.github) {
@@ -37,11 +37,6 @@ export default async () => {
   await yarn();
 
   // Run License Auditor Plugin from local source
-  // use a dynamic import to avoid bundling the plugin
-  const licenseAuditorModule = await import(
-    "@jpfulton/node-license-auditor-cli/dist/danger/danger-plugin.js"
-  );
-  const licenseAuditor = licenseAuditorModule.default;
   await licenseAuditor({
     failOnBlacklistedLicense: false,
     projectPath: ".",
