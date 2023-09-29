@@ -40,6 +40,8 @@ export default async () => {
   await licenseAuditor({
     failOnBlacklistedLicense: false,
     projectPath: ".",
+    remoteConfigurationUrl:
+      "https://raw.githubusercontent.com/jpfulton/jpfulton-license-audits/main/.license-checker.json",
     showMarkdownSummary: true,
     showMarkdownDetails: true,
   });
