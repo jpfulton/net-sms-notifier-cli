@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
@@ -73,19 +73,31 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      statuses: write
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up node
         uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
 
       - name: Update Yarn Version
         run: corepack enable && yarn set version stable
 
       - name: Compile
         run: yarn && yarn build
+
+      - name: Danger
+        if: (github.event_name == 'pull_request' && github.event.action != 'closed')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn danger ci
 
   tag-release-and-publish:
     name: "Tag, Release and Publish"
@@ -97,7 +109,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Bump version and push tag
         id: tag_version
@@ -124,6 +136,9 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
 
       - name: Update Yarn Version
         run: corepack enable && yarn set version stable
