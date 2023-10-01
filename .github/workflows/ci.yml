@@ -93,11 +93,19 @@ jobs:
       - name: Compile
         run: yarn && yarn build
 
+      #- name: Danger
+      #  if: (github.event_name == 'pull_request' && github.event.action != 'closed')
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  run: yarn danger ci
+
       - name: Danger
         if: (github.event_name == 'pull_request' && github.event.action != 'closed')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn danger ci
+        uses: jpfulton/danger-js-action@main
+        with:
+          dangerfile: dangerfile.ts
 
   tag-release-and-publish:
     name: "Tag, Release and Publish"
