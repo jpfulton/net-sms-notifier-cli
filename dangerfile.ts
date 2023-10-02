@@ -49,7 +49,7 @@ export default async () => {
   // Run Yarn Plugin
   await yarn();
 
-  // Run License Auditor Plugin from local source
+  // Run License Auditor Plugin
   await licenseAuditor({
     failOnBlacklistedLicense: false,
     projectPath: ".",
