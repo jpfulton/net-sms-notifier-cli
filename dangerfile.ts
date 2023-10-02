@@ -28,10 +28,11 @@ export default async () => {
   }
 
   // Run Jest Plugin
-  if (!fs.existsSync("test-results.json") {
-    warn("Jest test results not found. Please either add a step above this action to run Jest and create a test-results.json file and/or integrate Jest and add some tests.");
-  }
-  else {
+  if (!fs.existsSync("test-results.json")) {
+    warn(
+      "Jest test results not found. Please either add a step above this action to run Jest and create a test-results.json file and/or integrate Jest and add some tests."
+    );
+  } else {
     jest();
   }
 
