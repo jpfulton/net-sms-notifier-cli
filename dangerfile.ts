@@ -30,8 +30,14 @@ export default async () => {
   // jest();
 
   // Run ESLint Plugin
-  const eslintConfig = fs.readFileSync(".eslintrc.json", "utf8").toString();
-  await eslint(eslintConfig, [".ts", ".tsx"]);
+  if (!fs.existsSync(".eslintrc.json")) {
+    warn(
+      "ESLint configuration file not found. Please create a .eslintrc.json file at the root of the project."
+    );
+  } else {
+    const eslintConfig = fs.readFileSync(".eslintrc.json", "utf8").toString();
+    await eslint(eslintConfig, [".ts", ".tsx"]);
+  }
 
   // Run Yarn Plugin
   await yarn();
