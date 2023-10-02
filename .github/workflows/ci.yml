@@ -74,6 +74,10 @@ jobs:
     name: Compile
     runs-on: ubuntu-latest
     permissions:
+      actions: write
+      checks: write
+      contents: write
+      issues: write
       pull-requests: write
       statuses: write
 
@@ -103,8 +107,8 @@ jobs:
         if: (github.event_name == 'pull_request' && github.event.action != 'closed')
         uses: jpfulton/danger-js-action@main
         env:
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_PAT }}
         with:
           dangerfile: dangerfile.ts
           debug_mode: true
