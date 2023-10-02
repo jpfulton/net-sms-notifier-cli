@@ -104,7 +104,7 @@ jobs:
         uses: jpfulton/danger-js-action@main
         env:
           #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_PAT }}
         with:
           dangerfile: dangerfile.ts
           debug_mode: true
