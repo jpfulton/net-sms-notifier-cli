@@ -98,7 +98,7 @@ jobs:
         if: (github.event_name == 'pull_request' && github.event.action != 'closed')
         uses: jpfulton/danger-js-action@main
         with:
-          dangerfile: dangerfile.ts
+          dangerfile: https://raw.githubusercontent.com/jpfulton/jpfulton-devops-config/main/danger-files/dangerfile-node-project.ts
           debug_mode: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
