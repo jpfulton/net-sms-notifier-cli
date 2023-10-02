@@ -1,5 +1,6 @@
 import eslint from "@seadub/danger-plugin-eslint";
 import { danger, warn } from "danger";
+import jest from "danger-plugin-jest";
 import yarn from "danger-plugin-yarn";
 import * as fs from "node:fs";
 
@@ -27,7 +28,12 @@ export default async () => {
   }
 
   // Run Jest Plugin
-  // jest();
+  if (!fs.existsSync("test-results.json") {
+    warn("Jest test results not found. Please either add a step above this action to run Jest and create a test-results.json file and/or integrate Jest and add some tests.");
+  }
+  else {
+    jest();
+  }
 
   // Run ESLint Plugin
   if (!fs.existsSync(".eslintrc.json")) {
