@@ -102,6 +102,8 @@ jobs:
       - name: Danger
         if: (github.event_name == 'pull_request' && github.event.action != 'closed')
         uses: jpfulton/danger-js-action@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.DANGER_PAT }}
         with:
           dangerfile: dangerfile.ts
           debug_mode: true
