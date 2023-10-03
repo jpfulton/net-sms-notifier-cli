@@ -74,6 +74,7 @@ jobs:
     name: Compile
     runs-on: ubuntu-latest
     permissions:
+      checks: write
       pull-requests: write
       statuses: write
 
@@ -95,9 +96,10 @@ jobs:
 
       - name: Danger
         if: (github.event_name == 'pull_request' && github.event.action != 'closed')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn danger ci
+        uses: jpfulton/danger-js-action@main
+        with:
+          dangerfile: https://raw.githubusercontent.com/jpfulton/jpfulton-devops-config/main/danger-files/dangerfile-node-project.ts
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   tag-release-and-publish:
     name: "Tag, Release and Publish"
