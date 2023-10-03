@@ -99,7 +99,6 @@ jobs:
         uses: jpfulton/danger-js-action@main
         with:
           dangerfile: https://raw.githubusercontent.com/jpfulton/jpfulton-devops-config/main/danger-files/dangerfile-node-project.ts
-          debug_mode: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
   tag-release-and-publish:
